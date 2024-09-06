@@ -1,3 +1,57 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:storybook/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:tailwindcss/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "tailwindcss", "unicorn"],
+  "rules": {
+    // TODO: HTMLのaタグの使用禁止(2024/3/5時点ではエラーが発生していそう URL: https://github.com/vercel/next.js/issues/51742)
+    "@next/next/no-html-link-for-pages": "error",
+    // HTMLのimgタグの使用禁止
+    "@next/next/no-img-element": "error",
+    // consoleの使用禁止
+    "no-console": [
+      "error",
+      {
+        "allow": ["warn", "error"]
+      }
+    ],
+    // 未使用の変数があった場合に警告を出す
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    // ファイル名はケバブケースに統一する
+    "unicorn/filename-case": "warn",
+    // boolean型以外の暗黙のboolean型への型強制を防止する
+    "@typescript-eslint/strict-boolean-expressions": [
+      "warn",
+      {
+        "allowString": false,
+        "allowNumber": false,
+        "allowNullableObject": false
+      }
+    ],
+    "tailwindcss/no-custom-classname": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": { "project": "./" },
+      "node": {
+        "extensions": [".js", ".json", ".ts", ".tsx"]
+      }
+    }
+  },
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  }
 }
